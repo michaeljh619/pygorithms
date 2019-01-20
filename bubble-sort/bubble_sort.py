@@ -1,7 +1,12 @@
 def bubble_sort(unsorted_list, smallest_first=True):
+    # make sure unsorted_list is a list
+    if not isinstance(unsorted_list, list):
+        raise TypeError("'unsorted_list' arg must be a list!")
+
     # make shallow copy of list
     sorted_list = unsorted_list[:]
 
+    # passes loop
     while True:
         was_swapped = False
 
