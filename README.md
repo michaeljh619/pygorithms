@@ -16,11 +16,16 @@ Since the project is still small enough, simply clone the repository and write a
 	print("Sorted: " + str(sorted_list))
 
 
-##  Testing
-This project comes complete with its own automated tests using [pytest](https://docs.pytest.org/en/latest/). If you change any code, then run pytest to check to make sure you didn't break anything. Also, if you fix a bug, make sure to add a corresponding test to check for that bug as well.
+##  Automated Testing
+This project comes complete with its own automated tests, as well as code style checks. In the root directory, there is an executable file called *validate*. Simply run validate from the command line and it will run pytest and pycodestyle for you. You will need both [pytest](https://docs.pytest.org/en/latest/getting-started.html) and [pycodestyle](https://pypi.org/project/pycodestyle/) installed to run *validate*.
+
+If you change any code, you will need to run *validate* to ensure that you did not break anything and that the code style is still preserved.
+
+### Code Style
+This project's code is compliant with [pycodestyle](https://pypi.org/project/pycodestyle/). 
 
 ### Running the Tests
-To run tests, you need to have [pytest installed on your system](https://docs.pytest.org/en/latest/getting-started.html). Once pytest is installed, simply run it from command prompt at the root directory of the repository and it will run all the tests available:
+Simply run pytest from command prompt at the root directory of the repository and it will run all the tests available:
 
 	$ pytest
 	============================= test session starts =============================
@@ -39,6 +44,3 @@ Since the sorting algorithms all extend *BaseClass*, these tests are parameteriz
 - Least to Greatest: Test a valid list, sorting from least to greatest
 - Greatest to Least: Test a valid list, sorting from greatest to least
 - Not a List: Test that the sorting algorithm fails gracefully when passed a non-list type
-
-## Code Style
-This project's code is compliant with [pycodestyle](https://pypi.org/project/pycodestyle/). If you change any code, then run pycodestyle to check to make sure the style is still intact.
