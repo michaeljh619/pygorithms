@@ -1,6 +1,7 @@
 # import base class
 from base_sort import Base_Sort
 
+
 class Insertion_Sort(Base_Sort):
     @staticmethod
     def sort(list_to_sort_arg, smallest_first=True):
@@ -33,6 +34,6 @@ class Insertion_Sort(Base_Sort):
                     break
                 # decrement to keep searching backwards
                 i_insert_search -= 1
-    
+
         # return sorted list
         return list_to_sort

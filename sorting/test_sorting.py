@@ -3,10 +3,12 @@ from insertion_sort import Insertion_Sort
 from merge_sort import Merge_Sort
 import pytest
 
+
 def pytest_generate_tests(metafunc):
     sort_types = [Bubble_Sort, Insertion_Sort, Merge_Sort]
     if 'sorter' in metafunc.fixturenames:
         metafunc.parametrize("sorter", sort_types)
+
 
 def test_trivial(sorter):
     # test empty list
@@ -25,6 +27,7 @@ def test_trivial(sorter):
     one_list = sorter.sort([1], smallest_first=False)
     assert one_list == [1]
 
+
 def test_sorting_least_to_greatest(sorter):
     # test size 2 list ordered
     two_list_ord = sorter.sort([1, 2])
@@ -42,6 +45,7 @@ def test_sorting_least_to_greatest(sorter):
     large_list_ord = sorter.sort([1, 2, 3, 4, 5])
     assert large_list_ord == [1, 2, 3, 4, 5]
 
+
 def test_sorting_greatest_to_least(sorter):
     # test size 2 list ordered
     two_list_ord = sorter.sort([2, 1], smallest_first=False)
@@ -54,6 +58,7 @@ def test_sorting_greatest_to_least(sorter):
     # test larger list
     large_list_unord = sorter.sort([5, 3, 4, 1, 2], smallest_first=False)
     assert large_list_unord == [5, 4, 3, 2, 1]
+
 
 def test_bad_unsorted_list_arg(sorter):
     # test non iterable input
