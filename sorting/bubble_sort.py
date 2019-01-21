@@ -1,14 +1,14 @@
 # import base class
-from base_sort import Base_Sort
+from base_sort import BaseSort
 
 
-class Bubble_Sort(Base_Sort):
+class BubbleSort(BaseSort):
     @staticmethod
     def sort(list_to_sort_arg, smallest_first=True):
         # post filter list
-        list_to_sort = super(Bubble_Sort,
-                             Bubble_Sort).sort(list_to_sort_arg,
-                                               smallest_first)
+        list_to_sort = super(BubbleSort,
+                             BubbleSort).sort(list_to_sort_arg,
+                                              smallest_first)
 
         # passes loop
         while True:

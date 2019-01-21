@@ -1,7 +1,7 @@
-from base_sort import Base_Sort
+from base_sort import BaseSort
 
 
-class Merge_Sort(Base_Sort):
+class MergeSort(BaseSort):
     @staticmethod
     def __merge(left_list, right_list, smallest_first):
         # merge until no elements left
@@ -42,23 +42,23 @@ class Merge_Sort(Base_Sort):
         else:
             # split list into 2 halves
             half_index = len(unsorted_list)/2
-            left_list = Merge_Sort.__merge_sort_rec(
+            left_list = MergeSort.__merge_sort_rec(
                             unsorted_list[:half_index],
                             smallest_first)
-            right_list = Merge_Sort.__merge_sort_rec(
+            right_list = MergeSort.__merge_sort_rec(
                                         unsorted_list[half_index:],
                                         smallest_first)
             # merge sorted lists
-            return Merge_Sort.__merge(left_list, right_list,
-                                      smallest_first)
+            return MergeSort.__merge(left_list, right_list,
+                                     smallest_first)
 
     @staticmethod
     def sort(list_to_sort_arg, smallest_first=True):
         # post filter list
-        list_to_sort = super(Merge_Sort,
-                             Merge_Sort).sort(list_to_sort_arg,
-                                              smallest_first)
+        list_to_sort = super(MergeSort,
+                             MergeSort).sort(list_to_sort_arg,
+                                             smallest_first)
 
         # begin merge sort
-        return Merge_Sort.__merge_sort_rec(list_to_sort,
-                                           smallest_first)
+        return MergeSort.__merge_sort_rec(list_to_sort,
+                                          smallest_first)

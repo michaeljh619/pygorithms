@@ -1,14 +1,14 @@
 # import base class
-from base_sort import Base_Sort
+from base_sort import BaseSort
 
 
-class Insertion_Sort(Base_Sort):
+class InsertionSort(BaseSort):
     @staticmethod
     def sort(list_to_sort_arg, smallest_first=True):
         # post filter list
-        list_to_sort = super(Insertion_Sort,
-                             Insertion_Sort).sort(list_to_sort_arg,
-                                                  smallest_first)
+        list_to_sort = super(InsertionSort,
+                             InsertionSort).sort(list_to_sort_arg,
+                                                 smallest_first)
 
         # begin at second index and insert working backwards
         for i_insertee in range(1, len(list_to_sort)):

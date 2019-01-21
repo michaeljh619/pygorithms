@@ -1,11 +1,11 @@
-from bubble_sort import Bubble_Sort
-from insertion_sort import Insertion_Sort
-from merge_sort import Merge_Sort
+from bubble_sort import BubbleSort
+from insertion_sort import InsertionSort
+from merge_sort import MergeSort
 import pytest
 
 
 def pytest_generate_tests(metafunc):
-    sort_types = [Bubble_Sort, Insertion_Sort, Merge_Sort]
+    sort_types = [BubbleSort, InsertionSort, MergeSort]
     if 'sorter' in metafunc.fixturenames:
         metafunc.parametrize("sorter", sort_types)
 
@@ -60,7 +60,7 @@ def test_sorting_greatest_to_least(sorter):
     assert large_list_unord == [5, 4, 3, 2, 1]
 
 
-def test_bad_unsorted_list_arg(sorter):
+def test_not_a_list_arg(sorter):
     # test non iterable input
     with pytest.raises(TypeError) as e_info:
         sorter.sort(5)
