@@ -4,18 +4,20 @@ from digraph import Vertex
 # import pytest
 import pytest
 
+
 def pytest_generate_tests(metafunc):
     # adj list parameter
     adj_lists = [
         [],
-        [ [0, 0] ],
-        [ [0, 1] ],
-        [ [0, 1], [1, 0] ],
-        [ [0, 1], [3, 4], [1, 2], [2, 3] ],
-        [ [0,1], [0,2], [1,2], [2,0], [2,3], [3,3] ]
+        [[0, 0]],
+        [[0, 1]],
+        [[0, 1], [1, 0]],
+        [[0, 1], [3, 4], [1, 2], [2, 3]],
+        [[0, 1], [0, 2], [1, 2], [2, 0], [2, 3], [3, 3]]
     ]
     if 'adj_list' in metafunc.fixturenames:
         metafunc.parametrize('adj_list', adj_lists)
+
 
 def test_num_vertices(adj_list):
     # create graph
@@ -30,6 +32,7 @@ def test_num_vertices(adj_list):
     # vertices and set length match
     assert len(g.vertices) == len(s)
 
+
 def test_num_connections(adj_list):
     # create graph
     g = DG(adj_list)
@@ -42,6 +45,7 @@ def test_num_connections(adj_list):
     # compare
     assert len(adj_list) == num_connections
 
+
 def test_connections(adj_list):
     # create graph
     g = DG(adj_list)
@@ -53,6 +57,6 @@ def test_connections(adj_list):
         v1 = g.get_vertex(a[1])
         # ensure connection exists
         v_neighbor = v0.get_neighbor(a[1])
-        assert v_neighbor != None
+        assert v_neighbor is not None
         # ensure connection is to v1
         assert v1 == v_neighbor
