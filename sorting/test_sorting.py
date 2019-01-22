@@ -5,59 +5,38 @@ import pytest
 
 
 def pytest_generate_tests(metafunc):
+    # different sorting types
     sort_types = [BubbleSort, InsertionSort, MergeSort]
     if 'sorter' in metafunc.fixturenames:
         metafunc.parametrize("sorter", sort_types)
 
-
-def test_trivial(sorter):
-    # test empty list
-    empty_list = sorter.sort([])
-    assert empty_list == []
-
-    # test list with one element
-    one_list = sorter.sort([1])
-    assert one_list == [1]
-
-    # test empty list, greatest to least
-    empty_list = sorter.sort([], smallest_first=False)
-    assert empty_list == []
-
-    # test list with one element, greatest to least
-    one_list = sorter.sort([1], smallest_first=False)
-    assert one_list == [1]
+    # lists and their sorted versions
+    test_lists_and_answers = [
+        ([], []),
+        ([1], [1]),
+        ([1, 2], [1, 2]),
+        ([2, 1], [1, 2]),
+        ([7, 3, 12, 15, 200, 1, 8], [1, 3, 7, 8, 12, 15, 200]),
+        ([5, 4, 3, 2, 1, 0, -12], [-12, 0, 1, 2, 3, 4, 5]),
+    ]
+    if 'test_list_and_answer' in metafunc.fixturenames:
+        metafunc.parametrize('test_list_and_answer',
+                             test_lists_and_answers)
 
 
-def test_sorting_least_to_greatest(sorter):
-    # test size 2 list ordered
-    two_list_ord = sorter.sort([1, 2])
-    assert two_list_ord == [1, 2]
+def test_sort(sorter, test_list_and_answer):
+    # get params
+    test_list = test_list_and_answer[0]
+    answer = test_list_and_answer[1]
+    reversed_answer = answer[::-1]
 
-    # test size 2 list unordered
-    two_list_unord = sorter.sort([2, 1])
-    assert two_list_unord == [1, 2]
+    # sort LtG
+    output_list = sorter.sort(test_list)
+    assert output_list == answer
 
-    # test larger list
-    large_list_unord = sorter.sort([5, 3, 4, 1, 2])
-    assert large_list_unord == [1, 2, 3, 4, 5]
-
-    # test larger list
-    large_list_ord = sorter.sort([1, 2, 3, 4, 5])
-    assert large_list_ord == [1, 2, 3, 4, 5]
-
-
-def test_sorting_greatest_to_least(sorter):
-    # test size 2 list ordered
-    two_list_ord = sorter.sort([2, 1], smallest_first=False)
-    assert two_list_ord == [2, 1]
-
-    # test size 2 list unordered
-    two_list_unord = sorter.sort([1, 2], smallest_first=False)
-    assert two_list_unord == [2, 1]
-
-    # test larger list
-    large_list_unord = sorter.sort([5, 3, 4, 1, 2], smallest_first=False)
-    assert large_list_unord == [5, 4, 3, 2, 1]
+    # sort GtL
+    output_list = sorter.sort(test_list, smallest_first=False)
+    assert output_list == reversed_answer
 
 
 def test_not_a_list_arg(sorter):
