@@ -1,0 +1,17 @@
+#!/bin/sh
+pytest -v | grep 'FAILED' &> /dev/null
+if [ $? == 0 ]; then
+	echo "ERROR: Some pytests failed!"
+	echo "Run './validate' in root directory to see errors"
+	exit 1
+else
+	echo "All pytests pass"
+fi
+
+if [[ $(pycodestyle --filename=*.py ./) ]]; then
+	echo "ERROR: pycodestyle found styling errors! Run validate."
+	echo "Run './validate' in root directory to see errors"
+    exit 1
+else
+    echo "All pycodestyle checks pass"
+fi
