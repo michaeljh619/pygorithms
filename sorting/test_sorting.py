@@ -1,12 +1,13 @@
 from bubble_sort import BubbleSort
 from insertion_sort import InsertionSort
 from merge_sort import MergeSort
+from quick_sort import QuickSort
 import pytest
 
 
 def pytest_generate_tests(metafunc):
     # different sorting types
-    sort_types = [BubbleSort, InsertionSort, MergeSort]
+    sort_types = [BubbleSort, InsertionSort, MergeSort, QuickSort]
     if 'sorter' in metafunc.fixturenames:
         metafunc.parametrize("sorter", sort_types)
 
@@ -18,6 +19,8 @@ def pytest_generate_tests(metafunc):
         ([2, 1], [1, 2]),
         ([7, 3, 12, 15, 200, 1, 8], [1, 3, 7, 8, 12, 15, 200]),
         ([5, 4, 3, 2, 1, 0, -12], [-12, 0, 1, 2, 3, 4, 5]),
+        ([16, 0, 15, 1, 14, 2, 13, 3, 12, 4, 11, 5, 10, 6, 9, 7, 8],
+         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]),
     ]
     if 'test_list_and_answer' in metafunc.fixturenames:
         metafunc.parametrize('test_list_and_answer',
