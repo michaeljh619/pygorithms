@@ -1,4 +1,5 @@
 from breadth_first_search import BreadthFirstSearch
+from depth_first_search import DepthFirstSearch
 from digraph import DirectedGraph as DG
 from digraph import Vertex
 import pytest
@@ -6,19 +7,19 @@ import pytest
 
 def pytest_generate_tests(metafunc):
     # types of searches
-    search_types = [BreadthFirstSearch]
+    search_types = [BreadthFirstSearch, DepthFirstSearch]
     if 'searcher' in metafunc.fixturenames:
         metafunc.parametrize('searcher', search_types)
 
     # sample graphs
     graph_start_end_path = [
         (DG([[1, 1]]), 1, 2, None),
-        (DG([[1, 1]]), 1, 1, []),
-        (DG([[1, 2]]), 1, 2, [2]),
-        (DG([[1, 3], [3, 2]]), 1, 2, [3, 2]),
-        (DG([[1, 3], [3, 2], [1, 5], [3, 7]]), 1, 2, [3, 2]),
+        (DG([[1, 1]]), 1, 1, [1]),
+        (DG([[1, 2]]), 1, 2, [1, 2]),
+        (DG([[1, 3], [3, 2]]), 1, 2, [1, 3, 2]),
+        (DG([[1, 3], [3, 2], [1, 5], [3, 7]]), 1, 2, [1, 3, 2]),
         (DG([[1, 3], [3, 2], [1, 5], [3, 7],
-             [3, 3], [3, 1], [2, 12], [2, 1]]), 1, 2, [3, 2])
+             [3, 3], [3, 1], [2, 12], [2, 1]]), 1, 2, [1, 3, 2])
     ]
     if 'graph_start_end_path' in metafunc.fixturenames:
         metafunc.parametrize('graph_start_end_path',

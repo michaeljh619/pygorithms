@@ -20,7 +20,7 @@ class BreadthFirstSearch(BaseSearch):
 
         # add starting vertex to queue and start to search
         checked_vertex_ids = []
-        q.put((v, []))
+        q.put((v, [starting_id]))
         # each item in queue is the vertex with its path
         while not q.empty():
             # dequeue vertex and path
