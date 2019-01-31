@@ -17,9 +17,9 @@ class Vertex:
                     None)
 
     def get_weight(self, id_num):
-        for i in range(len(neighbors)):
-            if neighbors[i].id_num == id_num:
-                return weights[i]
+        for i in range(len(self.neighbors)):
+            if self.neighbors[i].id_num == id_num:
+                return self.weights[i]
         # else neighbor does not exist
         return None
 

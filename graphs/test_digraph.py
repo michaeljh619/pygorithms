@@ -13,7 +13,8 @@ def pytest_generate_tests(metafunc):
         [[0, 1]],
         [[0, 1], [1, 0]],
         [[0, 1], [3, 4], [1, 2], [2, 3]],
-        [[0, 1], [0, 2], [1, 2], [2, 0], [2, 3], [3, 3]]
+        [[0, 1], [0, 2], [1, 2], [2, 0], [2, 3], [3, 3]],
+        [[0, 1, 2], [0, 2, 3], [1, 2, 7], [2, 0, 2], [2, 3], [3, 3]],
     ]
     if 'adj_list' in metafunc.fixturenames:
         metafunc.parametrize('adj_list', adj_lists)
@@ -60,3 +61,21 @@ def test_connections(adj_list):
         assert v_neighbor is not None
         # ensure connection is to v1
         assert v1 == v_neighbor
+
+
+def test_weights(adj_list):
+    # create graph
+    g = DG(adj_list)
+
+    # test each weight
+    for a in adj_list:
+        # get vertices
+        v0 = g.get_vertex(a[0])
+        v1 = g.get_vertex(a[1])
+
+        # ensure weight is correct
+        a_weight = 1
+        if len(a) == 3:
+            a_weight = a[2]
+        v_weight = v0.get_weight(a[1])
+        assert a_weight == v_weight
