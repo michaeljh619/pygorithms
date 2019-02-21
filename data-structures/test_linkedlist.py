@@ -90,3 +90,9 @@ def test_remove_by_each_index(test_list):
             # assert lists match
             assert list(linked_list) == test_list_with_removed
             num_times_can_remove -= 1
+
+
+def test_contains(test_list):
+    linked_list = LinkedList(test_list)
+    for data in test_list:
+        assert data in linked_list

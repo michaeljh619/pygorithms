@@ -69,6 +69,9 @@ class LinkedList:
             link = link.next_link
         return link
 
+    def __contains__(self, data):
+        return self.__search_link_data(data) is not None
+
     def __setitem__(self, index, data):
         self.__search_link_index(index).data = data
 
