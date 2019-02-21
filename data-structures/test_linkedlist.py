@@ -19,7 +19,7 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("test_list", test_lists)
 
 
-def test_creation(test_list):
+def test_creation_through_constructor(test_list):
     # create linked list through constructor
     linked_list = LinkedList(test_list)
     # test length
@@ -31,6 +31,8 @@ def test_creation(test_list):
         assert data == test_list[index]
         index += 1
 
+
+def test_creation_through_append(test_list):
     # create linked list through append
     linked_list = LinkedList()
     for data in test_list:
@@ -43,3 +45,23 @@ def test_creation(test_list):
     for data in linked_list:
         assert data == test_list[index]
         index += 1
+
+
+def test_getitem(test_list):
+    # create linked list
+    linked_list = LinkedList(test_list)
+    # test __getitem__
+    for i in range(len(test_list)):
+        assert linked_list[i] == test_list[i]
+
+
+def test_setitem(test_list):
+    # create linked list
+    linked_list = LinkedList(test_list)
+    # set items in linked list to the reverse of the test list
+    test_list_rev = test_list[::-1]
+    for i in range(len(test_list_rev)):
+        linked_list[i] = test_list_rev[i]
+    # test items are set properly
+    for i in range(len(test_list_rev)):
+        assert linked_list[i] == test_list_rev[i]

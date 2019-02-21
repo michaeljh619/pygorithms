@@ -40,7 +40,23 @@ class LinkedList:
     def __len__(self):
         return self.length
 
-    def __search_link(self, data):
+    def __search_link_index(self, index):
+        # error checking
+        if index < 0 or index >= len(self):
+            raise IndexError(str(index) + " is out of bounds of range "
+                             + "0 and " + str(len(self)))
+
+        # search for index
+        link = self.first
+        search_index = 0
+        while search_index < index:
+            link = link.next_link
+            search_index += 1
+
+        # return link at index
+        return link
+
+    def __search_link_data(self, data):
         link = self.first
         while link:
             # if we reach the index, break
@@ -50,32 +66,31 @@ class LinkedList:
             link = link.next_link
         return link
 
+    def __setitem__(self, index, data):
+        self.__search_link_index(index).data = data
+
+    def __getitem__(self, index):
+        return self.__search_link_index(index).data
+
     def insert(self, index, data):
         # error checking
         if index < 0 or index > len(self):
             raise IndexError(str(index) + " is out of bounds of range "
                              + "0 and " + str(len(self)))
 
-        # search through links and get the link that the new link
-        # will become the next link of
-        search_index = 0
+        # search for the link index directly before where you want
+        # to insert this new link
         prev_link = None
-        link = self.first
-        while link:
-            # if we reach the index, break
-            if search_index == index:
-                break
-            # get current link at index
-            prev_link = link
-            # increment
-            link = link.next_link
-            search_index += 1
+        try:
+            prev_link = self.__search_link_index(index - 1)
+        except IndexError:
+            pass
 
         # create new link to insert
         new_link = Link(data)
 
         # insert at start of list
-        if index == 0:
+        if prev_link is None:
             # set aside first link for now
             original_first_link = self.first
             # make original first link the new link's next
