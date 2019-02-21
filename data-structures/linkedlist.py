@@ -40,11 +40,14 @@ class LinkedList:
     def __len__(self):
         return self.length
 
-    def __search_link_index(self, index):
+    def __error_check_index(self, index):
         # error checking
         if index < 0 or index >= len(self):
             raise IndexError(str(index) + " is out of bounds of range "
                              + "0 and " + str(len(self)))
+
+    def __search_link_index(self, index):
+        self.__error_check_index(index)
 
         # search for index
         link = self.first
@@ -73,10 +76,10 @@ class LinkedList:
         return self.__search_link_index(index).data
 
     def insert(self, index, data):
-        # error checking
-        if index < 0 or index > len(self):
-            raise IndexError(str(index) + " is out of bounds of range "
-                             + "0 and " + str(len(self)))
+        # error check everything except the index at the end of the
+        # linked list, since inserting there is actually valid
+        if index != self.length:
+            self.__error_check_index(index)
 
         # search for the link index directly before where you want
         # to insert this new link
@@ -110,3 +113,26 @@ class LinkedList:
 
     def append(self, data):
         return self.insert(len(self), data)
+
+    def remove(self, index):
+        self.__error_check_index(index)
+
+        # search for the link index directly before where you want
+        # to remove
+        prev_link = None
+        try:
+            prev_link = self.__search_link_index(index - 1)
+        except IndexError:
+            pass
+
+        # remove first element
+        if prev_link is None:
+            self.first = self.first.next_link
+        # remove some other element
+        else:
+            link_to_remove = prev_link.next_link
+            next_link = link_to_remove.next_link
+            prev_link.next_link = next_link
+
+        # update length
+        self.length -= 1

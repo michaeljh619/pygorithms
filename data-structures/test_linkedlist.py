@@ -47,6 +47,12 @@ def test_creation_through_append(test_list):
         index += 1
 
 
+def test_linkedlist_to_list(test_list):
+    # create linked list
+    linked_list = LinkedList(test_list)
+    assert list(linked_list) == test_list
+
+
 def test_getitem(test_list):
     # create linked list
     linked_list = LinkedList(test_list)
@@ -65,3 +71,22 @@ def test_setitem(test_list):
     # test items are set properly
     for i in range(len(test_list_rev)):
         assert linked_list[i] == test_list_rev[i]
+
+
+def test_remove_by_each_index(test_list):
+    # remove elements by each index as many times as you can and
+    # compare to removing it from original list
+    length = len(test_list)
+    for i in range(length):
+        # create linked list
+        linked_list = LinkedList(test_list)
+        test_list_with_removed = test_list[:]
+        num_times_can_remove = length - i
+        # keep removing from this index as many times as possible
+        while num_times_can_remove > 0:
+            # remove index from both linked list and test list
+            linked_list.remove(i)
+            test_list_with_removed.pop(i)
+            # assert lists match
+            assert list(linked_list) == test_list_with_removed
+            num_times_can_remove -= 1
