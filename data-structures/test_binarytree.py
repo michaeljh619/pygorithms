@@ -4,6 +4,20 @@ import pytest
 
 
 def pytest_generate_tests(metafunc):
+    # TreeNode lists to create
+    node_lists = [
+        [1],
+        [1, 2],
+        [2, 1],
+        [1, 2, 3],
+        [3, 2, 1],
+        [2, 1, 3],
+        [2, 3, 1],
+        [5, 12, 3, 1, 4, 10, 15]
+    ]
+    if 'node_list' in metafunc.fixturenames:
+        metafunc.parametrize('node_list', node_lists)
+
     # lists to create binary trees
     test_lists = [
         [],
@@ -13,6 +27,98 @@ def pytest_generate_tests(metafunc):
     ]
     if 'test_list' in metafunc.fixturenames:
         metafunc.parametrize('test_list', test_lists)
+
+
+def test_TreeNode_constructor():
+    # create nodes
+    node = TreeNode(17)
+    child_node = TreeNode(10, node)
+
+    # tests
+    assert node.data == 17
+    assert child_node.data == 10
+    assert child_node.parent == node
+
+
+def test_TreeNode_insert():
+    # create root
+    root = TreeNode(10)
+
+    # test children
+    assert root.left is None
+    assert root.right is None
+
+    # insert left
+    root.insert(1)
+    assert root.left is not None
+    assert root.left.data == 1
+    assert root.left.parent == root
+
+    # insert right
+    root.insert(20)
+    assert root.right is not None
+    assert root.right.data == 20
+    assert root.right.parent == root
+
+
+def create_nodes_from_list(data_list):
+    # create root
+    root = None
+    if len(data_list) > 0:
+        root = TreeNode(data_list[0])
+
+        # add children
+        if len(data_list) > 1:
+            for data in data_list[1:]:
+                root.insert(data)
+
+    # return root
+    return root
+
+
+def test_TreeNode_find(node_list):
+    root = create_nodes_from_list(node_list)
+    for data in node_list:
+        node = root.find(data)
+        assert node is not None
+        assert node.data == data
+
+
+def TreeNode_remove(node_list, remove_order, root):
+    for data in remove_order:
+        # node
+        node = root.find(data)
+        # linked nodes
+        parent = node.parent
+        left = node.left
+        right = node.right
+
+        # last node
+        if not parent and not left and not right:
+            node.remove()
+            assert node.data is None
+        # other nodes still left
+        else:
+            # remove
+            node.remove()
+            assert root.find(data) is None
+            # check linked nodes
+            if parent:
+                assert root.find(parent.data) is not None
+            if left:
+                assert root.find(left.data) is not None
+            if right:
+                assert root.find(right.data) is not None
+
+
+def test_TreeNode_remove(node_list):
+    for i in range(len(node_list)):
+        front_half = node_list[i:]
+        back_half = node_list[:i]
+        back_half = back_half[::-1]
+        remove_order = front_half + back_half
+        root = create_nodes_from_list(node_list)
+        TreeNode_remove(node_list, remove_order, root)
 
 
 def test_default_constructor():
